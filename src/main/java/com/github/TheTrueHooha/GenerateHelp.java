@@ -7,7 +7,7 @@ import static picocli.CommandLine.Help.*;
 import static picocli.CommandLine.Help.Column.*;
 import static picocli.CommandLine.Model.*;
 
-@Command(name = "help",
+@Command(name = "HELP",
         description = "shows the help command line")
 public class GenerateHelp implements IHelpSectionRenderer {
 
@@ -19,13 +19,10 @@ public class GenerateHelp implements IHelpSectionRenderer {
         }
         //prepares the layout into two columns
         //the left column overflows, and the right column wraps if the texts are too long
-        //TODO: fix the column size for the "help" command to show
         TextTable textTable = TextTable.forColumns(help.colorScheme(),
-                new Column(15, 2, Overflow.WRAP),
-                new Column(commandSpec.usageMessage().width() - 15, 0, Overflow.WRAP));
-        textTable.setAdjustLineBreaksForWideCJKCharacters(commandSpec.
-                usageMessage().
-                adjustLineBreaksForWideCJKCharacters());
+               new Column(20, 2, Overflow.WRAP),
+                new Column(commandSpec.usageMessage().width() - 5, 2, Overflow.WRAP));
+        textTable.setAdjustLineBreaksForWideCJKCharacters(commandSpec.usageMessage().adjustLineBreaksForWideCJKCharacters());
 
         for (CommandLine subCommand : commandSpec.subcommands().values()){
             addHierarchy(subCommand, textTable, "");
@@ -37,7 +34,9 @@ public class GenerateHelp implements IHelpSectionRenderer {
 
         //creates a comma separated list of commands
         String commandName = commandLine.getCommandSpec().name().toString();
-        commandName = commandName.substring(1, commandName.length() - 1);
+
+        //sets the command name to display
+        commandName = commandName.substring(0, commandName.length());
 
         //creates the command description that is taken from the header or description
         String description = commandDescription(commandLine.getCommandSpec().usageMessage());
