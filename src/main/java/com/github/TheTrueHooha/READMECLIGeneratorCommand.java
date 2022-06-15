@@ -1,28 +1,22 @@
 package com.github.TheTrueHooha;
 
 import io.micronaut.configuration.picocli.PicocliRunner;
-import io.micronaut.context.ApplicationContext;
-
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
-import picocli.CommandLine.Option;
-import picocli.CommandLine.Parameters;
+import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_COMMAND_LIST;
 
-@Command(name = "README-CLI-Generator", description = "...",
-        mixinStandardHelpOptions = true)
+@Command(name = "README-CLI-Generator",
+        description = "generate readme templates for your projects",
+        subcommands = {GenerateHelp.class})
 public class READMECLIGeneratorCommand implements Runnable {
-
-    @Option(names = {"-v", "--verbose"}, description = "...")
-    boolean verbose;
 
     public static void main(String[] args) throws Exception {
         PicocliRunner.run(READMECLIGeneratorCommand.class, args);
+        CommandLine commandLine = new CommandLine(new READMECLIGeneratorCommand());
+        commandLine.getHelpSectionMap().put(SECTION_KEY_COMMAND_LIST, new GenerateHelp());
+        commandLine.usage(System.out);
     }
 
     public void run() {
-        // business logic here
-        if (verbose) {
-            System.out.println("Hi!");
-        }
     }
 }
