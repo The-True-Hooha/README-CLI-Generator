@@ -9,3 +9,7 @@ To install use the following command
 
 ### Supported Languages
 A list of supported language with ready-made readme files.
+
+### STILL IN DEVELOPMENT
+
+Official release data would be announced soon.
